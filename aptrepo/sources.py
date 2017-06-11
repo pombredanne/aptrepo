@@ -1,7 +1,26 @@
 from   collections import namedtuple
 import re
+from   .archive    import Archive
 
-AptSource = namedtuple('AptSource', 'deb options uri suite components')
+class AptSource(namedtuple('AptSource', 'deb options uri suite components')):
+    def __str__(self):
+        sline = self.deb
+        if self.options:
+            sline += ' ' + ' '.join('{}={}'.format(k,v) if v is not None else k
+                                    for k,v in self.options.items())
+        sline += ' {0.uri} {0.suite}'.format(self)
+        if self.components:
+            sline += ' ' + ' '.join(self.components)
+        return sline
+
+    def repositories(self):
+        ### TODO: Incorporate `options` (and `deb`?) somehow
+        suite = Archive(self.uri).fetch_suite(self.suite)
+        if self.suite.endswith('/'):
+            return [suite]
+        else:
+            return [suite[c] for c in self.components]
+
 
 def parse_sources(fp):
     for line in fp:

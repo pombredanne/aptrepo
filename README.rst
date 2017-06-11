@@ -10,7 +10,7 @@
 `GitHub <https://github.com/jwodder/aptrepo>`_
 | `Issues <https://github.com/jwodder/aptrepo/issues>`_
 
-``aptrepo`` is a developmental attempt at a pure Python library for fetching
+``aptrepo`` is a work-in-progress attempt at a pure Python library for fetching
 data from arbitrary APT repositories (without having to add them to your
 ``sources.list`` first).  Currently, its main attractions are the programs in
 its command-line interface:
@@ -84,9 +84,8 @@ or more times to enable INFO or DEBUG logging.
 
 Installation
 ============
-
-``aptrepo`` requires Python 3.4 or higher.  Just use `pip
-<https://pip.pypa.io/>`_ for Python 3 (You have pip, right?) to install
+``aptrepo`` requires Python 3.4 or higher.  Just use version 6.0 or higher of
+`pip <https://pip.pypa.io/>`_ for Python 3 (You have pip, right?) to install
 ``aptrepo`` and its dependencies::
 
     pip3 install git+https://github.com/jwodder/aptrepo.git

@@ -4,12 +4,13 @@ import attr
 from   debian.deb822    import Packages, Sources
 from   property_manager import cached_property
 from   .config          import I18N_INDEX_HASHES
+from   .contents        import parse_contents
 from   .index           import IndexFile
-from   .internals       import parse_contents, joinurl
+from   .internals       import joinurl
 
 log = logging.getLogger(__name__)
 
-@attr.s(hash=False)
+@attr.s
 class Component:
     # not for public construction
     suite = attr.ib()
@@ -88,5 +89,15 @@ class Component:
             joinurl(self.name, 'Contents-' + sarch),
         )
         return parse_contents(contents)
+
+    def as_apt_source(self, deb='deb'):
+        from .sources import AptSource
+        return AptSource(
+            deb=deb,
+            options={},
+            uri=self.archive.uri,
+            suite=self.suite.name,
+            components=[self.name],
+        )
 
     ### TODO: def fetch_release_file(self):  # Rethink name

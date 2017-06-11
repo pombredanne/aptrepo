@@ -17,7 +17,7 @@ with open(join(dirname(__file__), 'README.rst')) as fp:
 setup(
     name='aptrepo',
     version=version,
-    packages=find_packages(include=['aptrepo', 'aptrepo.*']),
+    packages=find_packages(),
     license='MIT',
     author='John Thorvald Wodder II',
     author_email='aptrepo@varonathe.org',
@@ -25,16 +25,17 @@ setup(
     description='Examining & traversing APT repositories',
     long_description=long_desc,
     url='https://github.com/jwodder/aptrepo',
+    python_requires='~=3.4',
 
     install_requires=[
-        'attrs>=16.3.0,<17',
-        'beautifulsoup4>=4.4.0,<5',
+        'attrs~=17.1',
+        'beautifulsoup4~=4.4',
         # python-debian needs chardet, but it doesn't list it in its setup.py!
         'chardet',
         'prettytable>=0.7.2,<1',
         'property-manager',
         'python-debian>=0.1.23',
-        'requests>=2.2.0,<3',
+        'requests~=2.2',
     ],
 
     extras_require={
@@ -49,6 +50,7 @@ setup(
         #'Development Status :: 4 - Beta',
         #'Development Status :: 5 - Production/Stable',
 
+        'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',

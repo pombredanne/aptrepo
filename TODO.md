@@ -1,6 +1,8 @@
 - Add docstrings
 - Determine the minimum necessary versions of chardet, property-manager, and
   python-apt needed
+- Tag the code at each point it was stable?
+    - Use `setuptools_scm` for managing the version number?
 
 Features
 --------
@@ -23,6 +25,7 @@ Features
     - downloading files to disk and using them as local caches (including
       support for Valid-Until in Release files)
         - `.diff/Index` files
+        - Look into how pip does its caching
     - parsing the system's sources.list?
         - Use `apt_pkg.config` to get the locations of sources.list and
           sources.list.d
@@ -35,23 +38,16 @@ Features
     - Add an option for downgrading hash mismatch errors to warnings?
         - Downgrade by default?
 
-- Give Component and PPA methods for converting to a sources.list entry or
-  representation thereof
 - Give PPA methods for fetching data from Launchpad (pubkey, supported Ubuntu
   releases?, etc.)
 - Add methods for actually downloading packages
     - Add a method/command for downloading the latest version of a given
       package in a given repository/set of repositories
 - Add (more) logging
-- Allow accessing the elements of an `IndexFile`'s `fields` via attribute
-  access on the `IndexFile` object?
-    - This lookup should be case-insensitive and treat `_` as equivalent to `-`
 - Add commands for fetching:
     - Contents files
     - architectures supported by a suite/component?
-- Support repositories like Chef's that name the "Components" field in Release
-  files "Component"
-- Make the unparsed fields of `ReleaseFile`s available somewhere?
+- Support setting the architecture and Ubuntu release in a config file
 
 
 Coding & Technologies
@@ -68,16 +64,22 @@ Coding & Technologies
   temporary files?
     - No.  Uncompressed Packages files can be as large as 43 MB, and
       uncompressed Contents files can reach 1 GB.
-- Set the User Agent used for HTTP requests?
+- Set the User Agent used for HTTP requests
 - Give `IndexFile` a(n optional?) `baseurl` parameter?
 - Make the set of known hashes and compression algorithms configurable via
   `config.py`
+- Make the values in `config.py` be set & retrieved via functions/classes
+  instead of directly as variables?
 - Make `Suite` into a `Mapping`?
 - Stop using `joinurl` to join relative paths?
 - Give `Suite` and `FlatRepository` an `is_synonym`(?) method that compares
   `self` to another `Suite`/`FlatRepository` based solely on `release`
   attributes
 - Export `Compression`?
+- Rename `IndexFile`? (because that term technically includes Packages and
+  Sources files, too, it seems)
+- Test as much as possible
+- Split the `sources.list` parsing into its own package?
 
 
 Research

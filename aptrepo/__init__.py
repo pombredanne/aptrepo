@@ -6,6 +6,7 @@ __url__          = 'https://github.com/jwodder/aptrepo'
 
 from .archive     import Archive
 from .component   import Component
+from .contents    import ContentsPackage, parse_contents
 from .errors      import (
                             Error,
                                 FileValidationError,
@@ -24,7 +25,12 @@ from .ppa         import PPA
 from .release     import ReleaseFile
 from .sources     import AptSource, parse_sources
 from .suite       import Suite
-from .util        import dpkg_architecture, dpkg_foreign_architectures, for_json
+from .util        import (
+                            dpkg_architecture,
+                            dpkg_foreign_architectures,
+                            for_json,
+                            ubuntu_release,
+                         )
 
 import logging
 logging.getLogger(__name__).addHandler(logging.NullHandler())
@@ -34,6 +40,7 @@ __all__ = [
     'Archive',
     'CannotFetchFileError',
     'Component',
+    'ContentsPackage',
     'Error',
     'FileInaccessibleError',
     'FileValidationError',
@@ -51,5 +58,7 @@ __all__ = [
     'dpkg_architecture',
     'dpkg_foreign_architectures',
     'for_json',
+    'parse_contents',
     'parse_sources',
+    'ubuntu_release',
 ]

@@ -1,15 +1,19 @@
 import collections
-from   datetime    import datetime
-import subprocess
+from   datetime   import datetime
+from   subprocess import check_output
 
 def dpkg_architecture():
     # cf. <https://deb-pkg-tools.readthedocs.io/en/latest/#deb_pkg_tools.utils.find_debian_architecture>
-    return subprocess.check_output(['dpkg', '--print-architecture'],
-                                   universal_newlines=True).strip()
+    return check_output(
+        ['dpkg', '--print-architecture'],
+        universal_newlines=True,
+    ).strip()
 
 def dpkg_foreign_architectures():
-    return subprocess.check_output(['dpkg', '--print-foreign-architectures'],
-                                   universal_newlines=True).splitlines()
+    return check_output(
+        ['dpkg', '--print-foreign-architectures'],
+        universal_newlines=True,
+    ).splitlines()
 
 def for_json(obj):
     if hasattr(obj, 'for_json'):
@@ -30,3 +34,12 @@ def for_json(obj):
         else:
             data["__class__"] = type(obj).__name__
             return data
+
+def ubuntu_release():
+    ### TODO: Support Ubuntu derivatives somehow
+    # See <http://refspecs.linuxfoundation.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/lsbrelease.html> for specification
+    lsb_release = check_output(['lsb_release', '-ic'], universal_newlines=True)
+    relinfo = dict(line.split('\t') for line in lsb_release.splitlines())
+    if relinfo['Distributor ID:'] != 'Ubuntu':
+        raise RuntimeError('not running on Ubuntu')
+    return relinfo['Codename:']
